@@ -10,7 +10,7 @@ fi
 
 
 if [ -f ./temp.txt ]; then 
-	rem="$(cat ./temp.txt | tr -d '\n')"
+	rem="$(< ./temp.txt )"
 else
 	printf '%s' $total > ./temp.txt
 	rem=$total
@@ -25,7 +25,7 @@ elif [ $1 == "add" ]; then
 	fi
 	if [ $2 -gt 0 ]; then
 		if [ $2 -lt $rem ]; then
-			rem=$(($rem - $2));echo "Goodjob! Today remainin time : $rem";exit 0
+			rem=$(($rem - $2));printf '%s' $rem >./temp.txt;echo "Goodjob! Today remainin time : $rem";exit 0
 		else
 			echo "invalid value";exit 2
 		fi
@@ -35,13 +35,13 @@ elif [ $1 == "add" ]; then
 	
 elif [ $1 == "finish" ]; then
 	if [ -f ./alltime.txt ]; then 
-		tmp="$(cat ./alltime.txt | tr -d '\n')"
+		tmp="$(< ./alltime.txt )"
 		tmp=$(($rem + $tmp))
 		printf '%s' $tmp > ./alltime.txt
 		echo "Nice try ... today you pass $rem mins.total stack time is $tmp ... glhf!";exit 0
 	else
 		printf '%s' $rem > ./alltime.txt
-		echo "Nice try ... today you pass $rem mins.total stack time is $rem ... glhf!";exit 0
+		echo "Nice try ... today you pass $rem mins.total stack time is $rem ... glhf!";exit 1
 	fi
 elif [ $1 == "status" ]; then
 	echo "to day remaining time : $rem";exit 0 
