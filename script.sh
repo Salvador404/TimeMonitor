@@ -41,7 +41,7 @@ elif [ $1 == "finish" ]; then
 		echo "Nice try ... today you pass $rem mins.total stack time is $tmp ... glhf!";exit 0
 	else
 		printf '%s' $rem > ./alltime.txt
-		echo "Nice try ... today you pass $rem mins.total stack time is $rem ... glhf!";exit 1
+        echo "Nice try ... today you pass $(($total - $rem)) mins.total stack time is $rem ... glhf!";exit 1
 	fi
 elif [ $1 == "status" ]; then
 	echo "to day remaining time : $rem";exit 0 
