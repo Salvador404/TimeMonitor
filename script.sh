@@ -34,7 +34,8 @@ elif [ $1 == "add" ]; then
 	fi
 	
 elif [ $1 == "finish" ]; then
-	if [ -f ./alltime.txt ]; then 
+    printf '%s' $total > ./temp.txt
+    if [ -f ./alltime.txt ]; then 
 		tmp="$(< ./alltime.txt )"
 		tmp=$(($rem + $tmp))
 		printf '%s' $tmp > ./alltime.txt
@@ -44,8 +45,13 @@ elif [ $1 == "finish" ]; then
         echo "Nice try ... today you pass $(($total - $rem)) mins.total stack time is $rem ... glhf!";exit 1
 	fi
 elif [ $1 == "status" ]; then
-	echo "to day remaining time : $rem";exit 0 
-
+	echo "to day remaining time : $rem";
+    if [ -f ./alltime.txt ]; then
+        tmp="$(< ./alltime.txt )"
+        echo "your total remaining stack : $tmp";exit 0
+    else
+        echo "your total stack still empty!";exit 0
+    fi
 else
 	echo "invalid argumant!";exit 2
 fi
